@@ -1378,6 +1378,19 @@ namespace PowerPointLabs
                 throw;
             }
         }
+
+        public Bitmap GetSyncLabImage(Office.IRibbonControl control)
+        {
+            try
+            {
+                return new System.Drawing.Bitmap(Properties.Resources.SyncLab);
+            }
+            catch (Exception e)
+            {
+                Logger.LogException(e, "GetSyncLabImage");
+                throw;
+            }
+        }
         # endregion
 
         public void ZoomStyleChanged(Office.IRibbonControl control, bool pressed)

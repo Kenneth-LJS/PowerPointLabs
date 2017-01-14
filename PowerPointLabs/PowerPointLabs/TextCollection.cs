@@ -127,6 +127,10 @@
         public const string ResizeLabButtonSupertip = "Opens the Resize Lab Interface";
         #endregion
 
+        #region Sync Lab
+        public const string SyncLabButtonSupertip = "Opens the Sync Lab Interface";
+        #endregion
+
         #endregion
 
         #region Help
@@ -328,6 +332,7 @@
         public const string RecManagementPanelTitle = "Record Management";
         public const string PositionsLabTaskPanelTitle = "Positions Lab";
         public const string ResizeLabsTaskPaneTitle = "Resize Lab";
+        public const string SyncLabTaskPanelTitle = "Sync Lab";
         # endregion 
 
         # region ShapeGalleryPresentation

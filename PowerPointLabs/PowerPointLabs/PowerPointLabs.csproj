@@ -630,6 +630,13 @@
     <Compile Include="SlightAdjustSettingsDialog.xaml.cs">
       <DependentUpon>SlightAdjustSettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SyncLab\SyncLabConfig.cs" />
+    <Compile Include="SyncLab\SyncLabPane.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="SyncLab\SyncLabPane.Designer.cs">
+      <DependentUpon>SyncLabPane.cs</DependentUpon>
+    </Compile>
     <Compile Include="TagMatchers\NoEffectTagMatcher.cs" />
     <Compile Include="Tags\NoEffectTag.cs" />
     <Compile Include="Utils\Assumption.cs" />
@@ -856,6 +863,10 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EffectsLab\View\EffectsLabBlurrinessDialogBox.resx">
       <DependentUpon>EffectsLabBlurrinessDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SyncLab\SyncLabPane.resx">
+      <DependentUpon>SyncLabPane.cs</DependentUpon>
+      <SubType>Designer</SubType>
     </EmbeddedResource>
     <EmbeddedResource Include="Views\LoadingDialog.resx">
       <DependentUpon>LoadingDialog.cs</DependentUpon>

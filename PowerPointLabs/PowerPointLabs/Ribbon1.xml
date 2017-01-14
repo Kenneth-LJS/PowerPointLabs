@@ -315,8 +315,8 @@
                 getLabel="GetSyncButtonLabel"
                 size="large"
                 getImage="GetShapesLabImage"
-                getSupertip="GetCustomeShapeButtonSupertip"
-                onAction="CustomShapeButtonClick"/>
+                getSupertip="GetSyncLabButtonSupertip"
+                onAction="SyncLabButtonClick"/>
           <button id="DrawingsLabButton"
                   visible="false"
                   getLabel="GetDrawingsLabButtonLabel"

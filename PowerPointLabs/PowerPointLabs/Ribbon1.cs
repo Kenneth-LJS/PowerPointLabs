@@ -363,6 +363,10 @@ namespace PowerPointLabs
         {
             return TextCollection.CustomeShapeButtonSupertip;
         }
+        public string GetSyncLabButtonSupertip(Office.IRibbonControl control)
+        {
+            return TextCollection.SyncLabButtonSupertip;
+        }
 
         public string GetEffectsLabSupertip(Office.IRibbonControl control)
         {
@@ -2443,6 +2447,46 @@ namespace PowerPointLabs
                 Logger.LogException(e, "DrawingsLabButtonClicked");
                 throw;
             }
+        }
+        #endregion
+
+        #region Feature: Sync Lab
+        public void SyncLabButtonClick(Office.IRibbonControl control)
+        {
+            InitSyncLabPane();
+        }
+
+        private static SyncLabPane InitSyncLabPane()
+        {
+            var prensentation = PowerPointPresentation.Current.Presentation;
+
+            Globals.ThisAddIn.InitializeSyncLabConfig();
+            Globals.ThisAddIn.RegisterSyncLabPane(prensentation);
+
+            var syncLabPane = Globals.ThisAddIn.GetActivePane(typeof(SyncLabPane));
+
+            if (syncLabPane == null || !(syncLabPane.Control is SyncLabPane))
+            {
+                return null;
+            }
+
+            var syncLab = syncLabPane.Control as SyncLabPane;
+
+            Trace.TraceInformation(
+                "Before Visible: " +
+                string.Format("Pane Width = {0}, Pane Height = {1}, Control Width = {2}, Control Height {3}",
+                              syncLabPane.Width, syncLabPane.Height, syncLab.Width, syncLab.Height));
+
+            // if currently the pane is hidden, show the pane
+            if (!syncLabPane.Visible)
+            {
+                syncLabPane.Visible = true;
+
+                syncLab.Width = syncLabPane.Width - 16;
+                syncLab.PaneReload();
+            }
+
+            return syncLab;
         }
         #endregion
 

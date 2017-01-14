@@ -55,6 +55,8 @@ namespace PowerPointLabs
 
         internal PowerPointShapeGalleryPresentation ShapePresentation;
 
+        internal SyncLabConfig SyncLabConfigs;
+
         public readonly string OfficeVersion2013 = "15.0";
         public readonly string OfficeVersion2010 = "14.0";
 
@@ -514,6 +516,20 @@ namespace PowerPointLabs
             }
         }
 
+        public void InitializeSyncLabConfig()
+        {
+            // if SyncLabConfig has already been intialized, do nothing
+            if (SyncLabConfigs != null) return;
+
+            SyncLabConfigs = new SyncLabConfig(AppDataFolder);
+
+            // create a directory under specified location if the location does not exist
+            if (!Directory.Exists(SyncLabConfigs.SyncRootFolder))
+            {
+                Directory.CreateDirectory(SyncLabConfigs.SyncRootFolder);
+            }
+        }
+
         public void PrepareMediaFiles(PowerPoint.Presentation pres, string tempPath)
         {
             var presFullName = pres.FullName;
@@ -641,6 +657,20 @@ namespace PowerPointLabs
             RegisterTaskPane(
                 new CustomShapePane(ShapesLabConfigs.ShapeRootFolder, ShapesLabConfigs.DefaultCategory),
                 TextCollection.ShapesLabTaskPanelTitle, activeWindow, null, null);
+        }
+
+        public void RegisterSyncLabPane(PowerPoint.Presentation presentation)
+        {
+            if (GetActivePane(typeof(CustomShapePane)) != null)
+            {
+                return;
+            }
+
+            var activeWindow = presentation.Application.ActiveWindow;
+
+            RegisterTaskPane(
+                new SyncLabPane(SyncLabConfigs.SyncRootFolder, SyncLabConfigs.DefaultCategory),
+                TextCollection.SyncLabTaskPanelTitle, activeWindow, null, null);
         }
 
         public void SyncShapeAdd(string shapeName, string shapeFullName, string category)

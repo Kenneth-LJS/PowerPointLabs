@@ -577,6 +577,10 @@ namespace PowerPointLabs
         {
             return TextCollection.CustomeShapeButtonLabel;
         }
+        public string GetSyncButtonLabel(Office.IRibbonControl control)
+        {
+            return TextCollection.SyncLabButtonLabel;
+        }
 
         public string GetEffectsLabButtonLabel(Office.IRibbonControl control)
         {

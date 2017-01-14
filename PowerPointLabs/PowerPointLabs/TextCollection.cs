@@ -230,7 +230,11 @@
 
         # region Resize Lab
         public const string ResizeLabButtonLabel = "Resize Lab";
-        # endregion
+        #endregion
+        #endregion
+
+        #region Sync Lab
+        public const string SyncLabButtonLabel = "Sync Lab";
         # endregion
 
         # region Help

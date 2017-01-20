@@ -630,6 +630,15 @@
     <Compile Include="SlightAdjustSettingsDialog.xaml.cs">
       <DependentUpon>SlightAdjustSettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SyncLab\SyncLabListBox.cs">
+      <SubType>Component</SubType>
+    </Compile>
+    <Compile Include="SyncLab\SyncLabListBox.Designer.cs">
+      <DependentUpon>SyncLabListBox.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SyncLab\ObjectFormats\BackgroundFormat.cs" />
+    <Compile Include="SyncLab\ObjectFormats\FillFormat.cs" />
+    <Compile Include="SyncLab\ObjectFormats\ObjectFormat.cs" />
     <Compile Include="SyncLab\SyncLabConfig.cs" />
     <Compile Include="SyncLab\SyncLabPane.cs">
       <SubType>UserControl</SubType>
@@ -863,6 +872,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="EffectsLab\View\EffectsLabBlurrinessDialogBox.resx">
       <DependentUpon>EffectsLabBlurrinessDialogBox.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SyncLab\SyncLabListBox.resx">
+      <DependentUpon>SyncLabListBox.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SyncLab\SyncLabPane.resx">
       <DependentUpon>SyncLabPane.cs</DependentUpon>

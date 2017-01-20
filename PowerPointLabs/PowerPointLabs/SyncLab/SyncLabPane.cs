@@ -4,6 +4,9 @@ using System.Linq;
 using System.Windows.Forms;
 using Microsoft.Office.Interop.PowerPoint;
 using PPExtraEventHelper;
+using PowerPointLabs.SyncLab;
+using PowerPointLabs.SyncLab.ObjectFormats;
+using System.Drawing;
 
 namespace PowerPointLabs
 {
@@ -81,27 +84,45 @@ namespace PowerPointLabs
             CopyFormat(selectedShapes);
         }
 
-        public void CopyFormat(ShapeRange selectedShapes)
+        public void CopyFormat(ShapeRange shapes)
         {
-            foreach (Shape shape in selectedShapes)
+            List<ObjectFormat> newFormats = new List<ObjectFormat>();
+            foreach (Shape shape in shapes)
             {
-                CopyFormat(shape);
+                newFormats.Add(new SyncLab.ObjectFormats.FillFormat(shape));
             }
-        }
-
-        public void CopyFormat(Shape shape)
-        {
-            AddStyleToList(shape.TextEffect);
+            syncLabListBox.AddFormat(newFormats);
         }
 
         public void PasteFormat()
         {
-
+            ShapeRange selectedShapes = Globals.ThisAddIn.Application.ActiveWindow.Selection.ShapeRange;
+            PasteFormat(selectedShapes);
         }
 
-        public void AddStyleToList(TextEffectFormat format)
+        public void PasteFormat(ShapeRange shapes)
         {
-            formatsListBox.Items.Add(format);
+            foreach (Shape shape in shapes)
+            {
+                PasteFormat(shape);
+            }
+        }
+
+        public void PasteFormat(Shape shape)
+        {
+            List<int> checkedIndices = syncLabListBox.CheckedIndices.Cast<int>().ToList<int>();
+            checkedIndices.Sort();
+            checkedIndices.Reverse();
+            for (int i = 0; i < checkedIndices.Count; i++)
+            {
+                ObjectFormat format = syncLabListBox.GetFormat(checkedIndices[i]);
+                format.ApplyTo(shape);
+            }
+        }
+        
+        public void AddStyleToList(ObjectFormat format)
+        {
+            syncLabListBox.AddFormat(format);
         }
         # endregion
 

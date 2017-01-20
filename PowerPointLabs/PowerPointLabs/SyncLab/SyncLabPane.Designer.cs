@@ -31,25 +31,17 @@ namespace PowerPointLabs
         /// </summary>
         private void InitializeComponent()
         {
-            this.formatsListBox = new System.Windows.Forms.CheckedListBox();
+            this.components = new System.ComponentModel.Container();
             this.copyButton = new System.Windows.Forms.Button();
             this.pasteButton = new System.Windows.Forms.Button();
             this.copyLabel = new System.Windows.Forms.Label();
             this.pasteLabel = new System.Windows.Forms.Label();
+            this.syncLabListBox = new PowerPointLabs.SyncLab.SyncLabListBox();
             this.SuspendLayout();
-            // 
-            // formatsListBox
-            // 
-            this.formatsListBox.Font = new System.Drawing.Font("Verdana", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.formatsListBox.FormattingEnabled = true;
-            this.formatsListBox.Location = new System.Drawing.Point(3, 79);
-            this.formatsListBox.Name = "formatsListBox";
-            this.formatsListBox.Size = new System.Drawing.Size(294, 774);
-            this.formatsListBox.TabIndex = 0;
             // 
             // copyButton
             // 
-            this.copyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.copyButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.copyButton.Image = global::PowerPointLabs.Properties.Resources.LineColor_icon;
             this.copyButton.Location = new System.Drawing.Point(12, 12);
             this.copyButton.Name = "copyButton";
@@ -60,13 +52,14 @@ namespace PowerPointLabs
             // 
             // pasteButton
             // 
-            this.pasteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Center;
+            this.pasteButton.BackgroundImageLayout = System.Windows.Forms.ImageLayout.Stretch;
             this.pasteButton.Image = global::PowerPointLabs.Properties.Resources.FillColor_icon;
             this.pasteButton.Location = new System.Drawing.Point(69, 12);
             this.pasteButton.Name = "pasteButton";
             this.pasteButton.Size = new System.Drawing.Size(45, 45);
             this.pasteButton.TabIndex = 26;
             this.pasteButton.UseVisualStyleBackColor = true;
+            this.pasteButton.Click += new System.EventHandler(this.PasteButton_Click);
             // 
             // copyLabel
             // 
@@ -88,13 +81,28 @@ namespace PowerPointLabs
             this.pasteLabel.Text = "Paste";
             this.pasteLabel.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
+            // syncLabListBox
+            // 
+            this.syncLabListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.syncLabListBox.CheckBoxes = true;
+            this.syncLabListBox.Location = new System.Drawing.Point(12, 79);
+            this.syncLabListBox.Name = "syncLabListBox";
+            this.syncLabListBox.Size = new System.Drawing.Size(276, 801);
+            this.syncLabListBox.TabIndex = 30;
+            this.syncLabListBox.Text = "syncLabListBox";
+            this.syncLabListBox.UseCompatibleStateImageBehavior = false;
+            this.syncLabListBox.View = System.Windows.Forms.View.SmallIcon;
+            this.syncLabListBox.SmallImageList.ImageSize = new Size(100, 100);
+            // 
             // SyncLabPane
             // 
+            this.Controls.Add(this.syncLabListBox);
             this.Controls.Add(this.copyButton);
             this.Controls.Add(this.pasteButton);
-            this.Controls.Add(this.formatsListBox);
-            this.Controls.Add(this.pasteLabel);
             this.Controls.Add(this.copyLabel);
+            this.Controls.Add(this.pasteLabel);
             this.Name = "SyncLabPane";
             this.Size = new System.Drawing.Size(300, 883);
             this.ResumeLayout(false);
@@ -135,10 +143,10 @@ namespace PowerPointLabs
             Size = new Size(392, 100),
             Margin = new Padding(0, 0, 0, 0)
         };
-        private CheckedListBox formatsListBox;
         private Button copyButton;
         private Button pasteButton;
         private Label copyLabel;
         private Label pasteLabel;
+        private SyncLab.SyncLabListBox syncLabListBox;
     }
 }

@@ -883,6 +883,14 @@ namespace PowerPointLabs.Utils
                 bitmap.UnlockBits(bitmapData);
             }
         }
-        # endregion
-    }
+
+        public static Image CreateImageFromShape(Shape shape)
+        {
+            shape.Copy();
+            Image result = (Image)Clipboard.GetImage().Clone();
+            Clipboard.Clear();
+            return result;
+        }
+            #endregion
+        }
 }

@@ -636,7 +636,6 @@
     <Compile Include="SyncLab\SyncLabListBox.Designer.cs">
       <DependentUpon>SyncLabListBox.cs</DependentUpon>
     </Compile>
-    <Compile Include="SyncLab\ObjectFormats\BackgroundFormat.cs" />
     <Compile Include="SyncLab\ObjectFormats\FillFormat.cs" />
     <Compile Include="SyncLab\ObjectFormats\ObjectFormat.cs" />
     <Compile Include="SyncLab\SyncLabConfig.cs" />

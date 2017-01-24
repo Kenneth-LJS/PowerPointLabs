@@ -16,6 +16,7 @@ using Shape = Microsoft.Office.Interop.PowerPoint.Shape;
 using ShapeRange = Microsoft.Office.Interop.PowerPoint.ShapeRange;
 using TextFrame2 = Microsoft.Office.Interop.PowerPoint.TextFrame2;
 using Drawing = System.Drawing;
+using System.IO;
 
 namespace PowerPointLabs.Utils
 {
@@ -51,6 +52,17 @@ namespace PowerPointLabs.Utils
 
             shapeRange.Export(exportPath, PpShapeFormat.ppShapeFormatPNG, slideWidth,
                               slideHeight, PpExportMode.ppScaleToFit);
+        }
+
+        public static Image ShapeToImage(Shape shape)
+        {
+            string fileName = "temp_" + DateTime.Now.ToString("yyyyMMddHHmmssffff") + ".png";
+            string tempPicPath = Path.Combine(Path.GetTempPath(), fileName);
+            ExportShape(shape, tempPicPath);
+            Image tempImage = Image.FromFile(tempPicPath);
+            Image image = (Image)tempImage.Clone(); // free up the original file to be deleted
+            tempImage.Dispose();
+            return image;
         }
 
         public static void FitShapeToSlide(ref Shape shapeToMove)
@@ -97,7 +109,7 @@ namespace PowerPointLabs.Utils
             }
 
             return refShape != null &&
-                   candidateShape != null && 
+                   candidateShape != null &&
                    Math.Abs(refShape.Width - candidateShape.Width) < blurRadius &&
                    Math.Abs(refShape.Height - candidateShape.Height) < blurRadius;
         }
@@ -105,7 +117,7 @@ namespace PowerPointLabs.Utils
         public static bool IsSameType(Shape refShape, Shape candidateShape)
         {
             return refShape != null &&
-                   candidateShape != null && 
+                   candidateShape != null &&
                    refShape.Type == candidateShape.Type &&
                    (refShape.Type != MsoShapeType.msoAutoShape ||
                    refShape.AutoShapeType == candidateShape.AutoShapeType);
@@ -452,8 +464,8 @@ namespace PowerPointLabs.Utils
         /// </summary>
         public static void RotateShapeAboutPivot(Shape shape, float angle, float anchorX, float anchorY)
         {
-            double pivotX = shape.Left + anchorX*shape.Width;
-            double pivotY = shape.Top + anchorY*shape.Height;
+            double pivotX = shape.Left + anchorX * shape.Width;
+            double pivotY = shape.Top + anchorY * shape.Height;
             double midpointX = GetMidpointX(shape);
             double midpointY = GetMidpointY(shape);
 
@@ -608,8 +620,8 @@ namespace PowerPointLabs.Utils
         {
             slide.Export(exportPath,
                          "PNG",
-                         (int) GetDesiredExportWidth(),
-                         (int) GetDesiredExportHeight());
+                         (int)GetDesiredExportWidth(),
+                         (int)GetDesiredExportHeight());
         }
 
         public static void ExportSlide(PowerPointSlide slide, string exportPath)
@@ -700,7 +712,7 @@ namespace PowerPointLabs.Utils
         private static EffectTransition GetTransitionFromSlide(PowerPointSlide slide)
         {
             var transition = slide.GetNativeSlide().SlideShowTransition;
-            
+
             if (transition.AdvanceOnTime == MsoTriState.msoTrue)
             {
                 return new EffectTransition(MsoAnimTriggerType.msoAnimTriggerAfterPrevious, transition.AdvanceTime);
@@ -761,12 +773,12 @@ namespace PowerPointLabs.Utils
         # region GDI+
         public static void SuspendDrawing(Control control)
         {
-            Native.SendMessage(control.Handle, (uint) Native.Message.WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
+            Native.SendMessage(control.Handle, (uint)Native.Message.WM_SETREDRAW, IntPtr.Zero, IntPtr.Zero);
         }
 
         public static void ResumeDrawing(Control control)
         {
-            Native.SendMessage(control.Handle, (uint) Native.Message.WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
+            Native.SendMessage(control.Handle, (uint)Native.Message.WM_SETREDRAW, new IntPtr(1), IntPtr.Zero);
             control.Refresh();
         }
         # endregion
@@ -883,14 +895,6 @@ namespace PowerPointLabs.Utils
                 bitmap.UnlockBits(bitmapData);
             }
         }
-
-        public static Image CreateImageFromShape(Shape shape)
-        {
-            shape.Copy();
-            Image result = (Image)Clipboard.GetImage().Clone();
-            Clipboard.Clear();
-            return result;
-        }
-            #endregion
-        }
+        # endregion
+    }
 }

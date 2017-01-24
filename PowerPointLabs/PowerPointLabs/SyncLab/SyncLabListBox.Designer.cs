@@ -30,15 +30,12 @@ namespace PowerPointLabs.SyncLab
         /// </summary>
         private void InitializeComponent()
         {
-            this.components = new System.ComponentModel.Container();
             this.SuspendLayout();
             // 
             // SyncLabListBox
             // 
             this.CheckBoxes = true;
             this.LabelEdit = true;
-            this.OwnerDraw = true;
-            this.View = View.LargeIcon;
             this.ResumeLayout(false);
 
         }

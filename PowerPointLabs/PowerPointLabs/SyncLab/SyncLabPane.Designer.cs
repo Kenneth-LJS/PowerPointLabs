@@ -86,15 +86,12 @@ namespace PowerPointLabs
             this.syncLabListBox.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.syncLabListBox.CheckBoxes = true;
             this.syncLabListBox.Location = new System.Drawing.Point(12, 79);
             this.syncLabListBox.Name = "syncLabListBox";
             this.syncLabListBox.Size = new System.Drawing.Size(276, 801);
             this.syncLabListBox.TabIndex = 30;
             this.syncLabListBox.Text = "syncLabListBox";
             this.syncLabListBox.UseCompatibleStateImageBehavior = false;
-            this.syncLabListBox.View = System.Windows.Forms.View.SmallIcon;
-            this.syncLabListBox.SmallImageList.ImageSize = new Size(100, 100);
             // 
             // SyncLabPane
             // 

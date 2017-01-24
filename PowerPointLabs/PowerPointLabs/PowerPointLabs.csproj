@@ -630,6 +630,7 @@
     <Compile Include="SlightAdjustSettingsDialog.xaml.cs">
       <DependentUpon>SlightAdjustSettingsDialog.xaml</DependentUpon>
     </Compile>
+    <Compile Include="SyncLab\ObjectFormats\LineFormat.cs" />
     <Compile Include="SyncLab\SyncLabListBox.cs">
       <SubType>Component</SubType>
     </Compile>

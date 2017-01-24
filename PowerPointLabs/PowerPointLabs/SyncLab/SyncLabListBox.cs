@@ -13,14 +13,15 @@ namespace PowerPointLabs.SyncLab
     {
 
         public static readonly int MAX_LIST_SIZE = 50;
-        LinkedList<ListViewItem> formatList = new LinkedList<ListViewItem>();
+        List<ListViewItem> formatList = new List<ListViewItem>();
 
         public SyncLabListBox()
         {
             InitializeComponent();
+            this.CheckBoxes = true;
             this.View = View.LargeIcon;
-            this.ArrangeIcons(ListViewAlignment.Left);
             this.LargeImageList = new ImageList();
+            this.LargeImageList.ImageSize = ObjectFormat.DISPLAY_IMAGE_SIZE;
         }
 
         protected override void OnPaint(PaintEventArgs pe)
@@ -30,34 +31,20 @@ namespace PowerPointLabs.SyncLab
 
         public void AddFormat(ObjectFormat format)
         {
-            AddFormatNoUpdate(format);
-            UpdateList();
-        }
-
-        public void AddFormat(ICollection<ObjectFormat> formats)
-        {
-            foreach (ObjectFormat format in formats)
-            {
-                AddFormatNoUpdate(format);
-            }
-            UpdateList();
-        }
-
-        private void AddFormatNoUpdate(ObjectFormat format)
-        {
+            // Add thumbnail to list
             string imageKey = GetNextImageKey();
+            this.LargeImageList.Images.Add(imageKey, format.DisplayImage);
+            // Add item to list
             ListViewItem newItem = new ListViewItem(format.DisplayText, imageKey);
             newItem.Tag = format;
-            this.LargeImageList.Images.Add(imageKey, format.DisplayImage);
-            formatList.AddFirst(newItem);
-            while (formatList.Count > MAX_LIST_SIZE)
+            formatList.Insert(0, newItem);
+            // Remove excess items
+            if (formatList.Count > MAX_LIST_SIZE)
             {
-                formatList.RemoveLast();
+                int countToRemove = formatList.Count - MAX_LIST_SIZE;
+                formatList.RemoveRange(MAX_LIST_SIZE, countToRemove);
             }
-        }
-
-        private void UpdateList()
-        {
+            // Update displayed items
             this.BeginUpdate();
             this.Items.Clear();
             this.Items.AddRange(formatList.ToArray());

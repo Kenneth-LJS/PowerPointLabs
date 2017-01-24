@@ -7,6 +7,8 @@ using PPExtraEventHelper;
 using PowerPointLabs.SyncLab;
 using PowerPointLabs.SyncLab.ObjectFormats;
 using System.Drawing;
+using System.Reflection;
+using System.Diagnostics;
 
 namespace PowerPointLabs
 {
@@ -16,11 +18,27 @@ namespace PowerPointLabs
 
         private bool _firstTimeLoading = true;
 
+        private static readonly List<Type> OBJECT_FORMATS = InitializeObjectFormats();
+
         # region Constructors
         public SyncLabPane(string syncRootFolderPath, string defaultSyncCategoryName)
         {
             SetStyle(ControlStyles.UserPaint | ControlStyles.DoubleBuffer | ControlStyles.AllPaintingInWmPaint, true);
             InitializeComponent();
+        }
+
+        private static List<Type> InitializeObjectFormats()
+        {
+            List<Type> objectFormats = new List<Type>();
+            // Only add ObjectFormat types
+            objectFormats.Add(typeof(SyncLab.ObjectFormats.LineFormat));
+            //objectFormats.Add(typeof(SyncLab.ObjectFormats.FillFormat));
+            //objectFormats.Add(typeof(SyncLab.ObjectFormats.FillFormat));
+            foreach (Type t in objectFormats) // Ensure all types in list are ObjectFormat types
+            {
+                Debug.Assert(t.IsSubclassOf(typeof(ObjectFormat)), "Not all types are subclasses of the ObjectFormat class");
+            }
+            return objectFormats;
         }
         # endregion
 
@@ -43,12 +61,29 @@ namespace PowerPointLabs
 
         public void CopyFormat(ShapeRange shapes)
         {
-            List<ObjectFormat> newFormats = new List<ObjectFormat>();
             foreach (Shape shape in shapes)
             {
-                newFormats.Add(new SyncLab.ObjectFormats.FillFormat(shape));
+                CopyFormat(shape);
             }
-            syncLabListBox.AddFormat(newFormats);
+        }
+
+        public void CopyFormat(Shape shape)
+        {
+            // Clear checked items
+            for (int i = 0; i < syncLabListBox.Items.Count; i++)
+            {
+                syncLabListBox.Items[i].Checked = false;
+            }
+            // Add all the formats
+            foreach (Type formatClass in OBJECT_FORMATS)
+            {
+                ConstructorInfo cInfo = formatClass.GetConstructor(new[] { typeof(Shape) });
+                object newObject = cInfo.Invoke(new object[] { shape });
+                Debug.Assert(newObject is ObjectFormat, "Object instantiated is not an ObjectFormat");
+                ObjectFormat newFormat = (ObjectFormat)newObject;
+                syncLabListBox.AddFormat(newFormat);
+                syncLabListBox.Items[0].Checked = true;
+            }
         }
 
         public void PasteFormat()

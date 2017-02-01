@@ -744,10 +744,26 @@ namespace PowerPointLabs
         //Button Click Callbacks        
         public void AddAnimationButtonClick(Office.IRibbonControl control)
         {
+            string designName = "SyncLab";
+            PowerPoint.Design template = null;
+            // TEST BUTTON!
+            foreach (PowerPoint.Design d in Globals.ThisAddIn.Application.ActivePresentation.Designs)
+            {
+                if (d.Name.Equals(designName))
+                {
+                    template = d;
+                    break;
+                }
+            }
+            if (template == null)
+            {
+                template = Globals.ThisAddIn.Application.ActivePresentation.Designs.Add(designName);
+            }
             var shape = PowerPointCurrentPresentationInfo.CurrentSelection.ShapeRange[1];
-            string input = shape.Tags["sound type"];
-            ShowInputDialog(ref input);
-            shape.Tags.Add("sound type", input);
+            shape.Copy();
+            var shape2 = template.SlideMaster.Shapes.Paste()[1];
+            shape2.Visible = Microsoft.Office.Core.MsoTriState.msoFalse;
+            MessageBox.Show(shape2.Fill.BackColor.RGB.ToString());
         }
 
         private static DialogResult ShowInputDialog(ref string input)
